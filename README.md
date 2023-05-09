@@ -1,6 +1,6 @@
 # Docker
 
-### Comandos básicos:
+## Comandos básicos:
 - ```docker ps``` : Lista os containers em execução
     - ```docker ps -a``` : Lista todos os containers rodados (junto com os que estão rodando no momento)
 - ```docker run <imagem>``` : Cria um novo container
@@ -21,8 +21,41 @@
 - ```docker build <diretório_da_imagem>``` : Construir uma imagem Docker a partir de um Dockerfile (necessário fazer antes de rodar a imagem de fato!)
     > Obs: Qualquer alteração em um arquivo que faz parte do Docker file, precisa dar build novamente!
     - ```docker build <diretório_da_imagem> -t <repo>:<tag>``` : Semelhante ao comando básico, com diferença é que o repositório e a tag vão ser criados durante o build da imagem do Dockerfile
-    - ```docker cp <fonte> <destino>``` : Copia algum arquivo de um container para um diretório
+- ```docker cp <fonte> <destino>``` : Copia algum arquivo de um container para um diretório
         > Exemplo: docker cp node_diferente_1:/app/app.js ./copy/
 - ```docker pull <imagem>``` : Download de alguma imagem no hub
 - ```docker tag <id> <repository>:<tag>``` : Coloca o repository e tag, e quando fizermos docker ps, aparecerá o que colocamos nos argumentos desse comando
     > Obs: Se a tag não for especificada, latest será a padrão
+- ```docker top <id>``` : Mostra informações sobre o container específico rodando
+- ```docker inspect <id>``` : Mostra propriedades do container, várias informações detalhadas
+- ```docker stats``` : Mostra como os recursos estão sendo alocados no momento
+- ```docker login``` : Login com os dados do https://hub.docker.com/
+- ```docker logout``` : Logout do https://hub.docker.com/
+- ```docker push <id_imagem>``` : Envia a imagem para um repositório no Docker hub
+    > Obs: Tem que fazer build com a tag -t seguido de <username>/nome_repositorio
+    > Para atualizar uma imagem, devemos fazer a build novamente, mas com outra tag
+- ```docker system prune``` : Remove todos os containers, imagens e volumes que não estão sendo utilizados
+## Volumes
+
+Existem 3 tipos de volumes:
+- Anônimos: Diretórios criados pela flag -v, com um nome aleatório - não conseguimos reaproveitamento aqui
+- Nomeados: Volumes com nomes, podemos nos referir a estes facilmente e saber para que são utilizados no nosso ambiente
+- Bind mounts: Um forma de salvar dados na nossa máquina, sem o gerencimanto do Docker, precisamos informar um diretório aqui
+
+### Comandos básicos de volumes
+- ```docker run -v <diretório>``` : Cria um volume anônimo no diretório passado
+- ```docker run -v <nome_do_volume>:<diretório>``` : Cria um volume nomeado no diretório passado
+    > Exemplo : ```docker run -d -p 80:80 --name phpmessages_container -v /mnt/c/Users/Usuario/Desktop/Docker/2_volumes/messages:/var/www/html/messages --rm phpmessages```
+
+    > Obs : Se colocarmos com 'ro' no final, o volume vai ser somente leitura, exemplo: ```docker run -d -p 80:80 --name phpmessages_container -v /mnt/c/Users/Usuario/Desktop/Docker/2_volumes/messages:/var/www/html/messages:ro --rm phpmessages```
+
+- ```docker volume ls``` : Mostra os volumes criados
+
+- Para o Bind Mount, fazemos: 
+    > ```docker run -d -p 80:80 --name phpmessages_container -v /mnt/c/Users/Usuario/Desktop/Docker/2_volumes/:/var/www/html/ --rm phpmessages```
+    
+    > Perceba que aqui nós tiramos o /messages do path do volume, isso fez com que o bind mount entrasse em ação e atualizasse nosso projeto em tempo real. E é assim que vamos fazer daqui para frente com os projetos.
+- ```docker volume create <nome_do_volume>``` : Cria um volume nomeado
+- ```docker volume inspect <nome_do_volume>``` : Mostra informações sobre o volume
+- ```docker volume rm <nome_do_volume>``` : Remove um volume nomeado
+- ```docker volume prune``` : Remove todos os volumes que não estão sendo utilizados por nenhum container
