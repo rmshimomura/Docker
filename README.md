@@ -59,3 +59,13 @@ Existem 3 tipos de volumes:
 - ```docker volume inspect <nome_do_volume>``` : Mostra informações sobre o volume
 - ```docker volume rm <nome_do_volume>``` : Remove um volume nomeado
 - ```docker volume prune``` : Remove todos os volumes que não estão sendo utilizados por nenhum container
+
+### Comandos básicos de rede/network
+- ```docker network create <nome_da_rede>``` : Cria uma rede (tipo bridge, conectando o container com outros)
+- ```docker network create -d <driver> <nome_da_rede>``` : Cria uma rede com um driver específico
+- ```docker network rm <nome_da_rede>``` : Remove uma rede
+- ```docker network prune``` : Remove todas as redes que não estão sendo utilizadas por nenhum container
+- ```docker network connect <nome_da_rede> <nome_do_container>``` : Conecta um container a uma rede
+- ```docker network disconnect <nome_da_rede> <nome_do_container>``` : Desconecta um container de uma rede
+- ```docker network ls``` : Lista as redes criadas
+- ```docker network inspect <nome_da_rede>``` : Mostra informações sobre a rede
