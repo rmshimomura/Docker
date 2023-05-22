@@ -84,4 +84,4 @@ Usamos um arquivo chamado docker-compose.yaml para criar o nosso compose, e nele
     - ```docker-compose down --rmi all``` : Para todos os containers e remove os volumes que foram criados, e remove as imagens que foram criadas
     - ```docker-compose down --rmi all -v``` : Para todos os containers e remove os volumes que foram criados, e remove as imagens que foram criadas, e remove as redes que foram criadas
 
-- ```docker-compose ps``` :
+- ```docker-compose ps``` : Mostra os containers que estão rodando que foram criados pelo compose
