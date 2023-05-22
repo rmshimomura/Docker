@@ -1,0 +1,63 @@
+name: "Rodrigo"
+age: 20
+
+object:
+  version : 2
+  file: "teste.yaml"
+
+# Comment
+
+version: 2
+complete_version : 3.14
+
+# String can have double quotes or not
+
+no_quotes: This is a string
+double_quotes: "This is a string"
+
+# Null values:
+
+null_value_1 : null
+null_value_2 : ~
+
+# Booleans
+
+boolean_true_1 : true
+boolean_true_2 : On
+boolean_true_3 : Yes
+
+boolean_false_1 : false
+boolean_false_2 : Off
+boolean_false_3 : No
+
+# Arrays:
+
+array_1: # More used
+  - 1
+  - 2
+  - 3
+
+array_2: [1, 2, 3]
+
+mix_array:
+  - "Teste"
+  - 1
+  - true
+  - normal string :)
+
+# Dicts:
+
+dict_1:
+  key1: value1
+  key2: value2
+  key3: value3
+
+dict_1:
+  key1: value1
+  key2: value2
+  key3: value3
+  dict_inside:
+    key1: value1
+    key2: value2
+    key3: value3
+
