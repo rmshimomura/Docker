@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  db: # Container MySQL
+    image: mysql:5.7 # FROM mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql # Volume to persist data
+    restart: always # All changes will be applied automatically
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: rodrigo
+      MYSQL_PASSWORD: secret
+
+  wordpress:
+    depends_on:
+     - db
+    image: wordpress:latest # FROM wordpress:latest
+    ports:
+      - "8000:80" # Port 8000 from my pc and port 80 from container
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: rodrigo
+      WORDPRESS_DB_PASSWORD: secret
+      WORDPRESS_DB_NAME: wordpress
+volumes:
+  db_data: {} # Volume to persist data

@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  db: # Container MySQL
+    image: mysql:5.7 # FROM mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql # Volume to persist data
+    restart: always # All changes will be applied automatically
+    env_file:
+      - ./config/db.env # File with environment variables
+
+  wordpress:
+    depends_on:
+     - db
+    image: wordpress:latest # FROM wordpress:latest
+    ports:
+      - "8000:80" # Port 8000 from my pc and port 80 from container
+    restart: always
+    env_file:
+      - ./config/wp.env # File with environment variables      
+volumes:
+  db_data: {} # Volume to persist data

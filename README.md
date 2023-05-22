@@ -69,3 +69,19 @@ Existem 3 tipos de volumes:
 - ```docker network disconnect <nome_da_rede> <nome_do_container>``` : Desconecta um container de uma rede
 - ```docker network ls``` : Lista as redes criadas
 - ```docker network inspect <nome_da_rede>``` : Mostra informações sobre a rede
+
+## Compose
+
+Usamos um arquivo chamado docker-compose.yaml para criar o nosso compose, e nele colocamos as configurações de cada container que queremos criar, e depois rodamos o comando ```docker-compose up``` para subir todos os containers de uma vez só.
+
+### Comandos básicos de compose
+
+- ```docker-compose up``` : Cria todos os containers que estão no arquivo docker-compose.yaml
+    - ```docker-compose up -d``` : Cria todos os containers que estão no arquivo docker-compose.yaml em background
+
+- ```docker-compose down -v``` : Para todos os containers e remove os volumes que foram criados
+    - ```docker-compose down``` : Para todos os containers e remove os volumes que foram criados
+    - ```docker-compose down --rmi all``` : Para todos os containers e remove os volumes que foram criados, e remove as imagens que foram criadas
+    - ```docker-compose down --rmi all -v``` : Para todos os containers e remove os volumes que foram criados, e remove as imagens que foram criadas, e remove as redes que foram criadas
+
+- ```docker-compose ps``` :
