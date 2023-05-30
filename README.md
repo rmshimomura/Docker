@@ -85,3 +85,31 @@ Usamos um arquivo chamado docker-compose.yaml para criar o nosso compose, e nele
     - ```docker-compose down --rmi all -v``` : Para todos os containers e remove os volumes que foram criados, e remove as imagens que foram criadas, e remove as redes que foram criadas
 
 - ```docker-compose ps``` : Mostra os containers que estão rodando que foram criados pelo compose
+
+## Swarm
+
+### Comandos básicos de swarm
+
+- ```docker swarm init``` : Inicia o swarm
+    - ```docker swarm init --advertise-addr <ip>``` : Inicia o swarm com um ip específico
+- ```docker swarm leave``` : Sai do swarm
+    - ```docker swarm leave -f``` : Sai do swarm forçadamente
+- ```docker swarm join --token <token> <ip>:<porta>``` : Faz um nó se juntar ao swarm
+- ```docker swarm join-token manager``` : Mostra o token para um nó se juntar como manager (funciona apenas quando o nó é manager)
+- ```docker node ls``` : Lista os nós do swarm
+- ```docker node rm <id>``` : Remove um nó do swarm 
+- ```docker node update --availability drain <id>``` : Coloca um nó em modo de manutenção, fazendo com que ele não receba mais containers
+- ```docker node ps ``` : Mostra os containers que estão rodando em um nó
+- ```docker service create --name <nome> --replicas <numero> <imagem>``` : Cria um serviço com um número definido de replicações 
+- ```docker service ls``` : Lista os serviços do swarm
+- ```docker service rm <nome_do_serviço>``` : Remove um serviço do swarm
+- ```docker service ps <nome_do_serviço>``` : Mostra os containers que estão rodando do serviço
+- ```docker service scale <nome>=<replicas>``` : Escala um serviço
+- ```docker service update --image <imagem> <nome_do_serviço>``` : Atualiza a imagem de um serviço
+    #### Importante saber sobre redes em swarm
+    1. A conexão entre intâncias usa um driver diferente, chamado de overlay network
+    2. Primeiro cria-se a rede com o comando ```docker network create -d overlay <nome_da_rede>```
+    3. Depois, quando for criar o serviço, usa-se o comando ```docker service create --name <nome> --replicas <numero> --network <nome_da_rede> <imagem>```
+- ```docker service update --network-add <nome_da_rede> <nome_do_serviço>``` : Adiciona uma rede a um serviço
+- ```docker info``` : Mostra informações sobre o swarm
+- ```docker stack deploy -c <arquivo> <nome>``` : Cria um stack com base em um arquivo de configuração

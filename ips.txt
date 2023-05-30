@@ -1,0 +1,11 @@
+# NODE 1
+ssh -i "node1.pem" ec2-user@ec2-18-118-166-143.us-east-2.compute.amazonaws.com
+
+# NODE 2
+ssh -i "node2.pem" ec2-user@ec2-18-224-54-10.us-east-2.compute.amazonaws.com
+
+# NODE 3
+ssh -i "node3.pem" ec2-user@ec2-3-139-80-231.us-east-2.compute.amazonaws.com
+
+# Join on swarm made on node 1 <example>
+docker swarm join --token SWMTKN-1-123a98p20q6fb2l7rg7o164wv8zt2yvtt78vxivm1k0bfytfu7-e7191tjlbtaw8lr8nx57llnma 172.31.4.142:2377
