@@ -113,3 +113,70 @@ Usamos um arquivo chamado docker-compose.yaml para criar o nosso compose, e nele
 - ```docker service update --network-add <nome_da_rede> <nome_do_serviço>``` : Adiciona uma rede a um serviço
 - ```docker info``` : Mostra informações sobre o swarm
 - ```docker stack deploy -c <arquivo> <nome>``` : Cria um stack com base em um arquivo de configuração
+
+# Kubernetes
+
+## Minikube
+
+### Comandos básicos de minikube
+
+- ```minikube start``` : Inicia o minikube
+    - ```minikube start --driver=<driver>``` : Inicia o minikube com um driver específico
+>> Observação : Sempre que o computador for reiniciado, o minikube para, então é necessário iniciar ele novamente
+- ```minikube stop``` : Para o minikube
+- ```minikube status``` : Mostra o status do minikube
+- ```minikube dashboard``` : Abre o dashboard do minikube
+    - ```minikube dashboard --url``` : Mostra a url do dashboard do minikube
+- ```minikube service <nome_do_serviço>``` : Abre o serviço no navegador
+
+### Comandos básicos de kubectl
+
+- ```kubectl create deployment <nome> --image=<imagem>``` : Cria um deployment
+- ```kubectl get deployments``` : Lista os deployments
+- ```kubectl describe deployments``` : Mostra informações sobre os deployments
+    - ```kubectl describe deployment <nome>``` : Mostra informações sobre um deployment específico
+- ```kubectl get pods``` : Lista os pods
+- ```kubectl describe pods``` : Mostra informações sobre os pods
+    - ```kubectl describe pod <nome>``` : Mostra informações sobre um pod específico
+- ```kubectl config view``` : Mostra informações sobre o cluster
+- ```kubectl expose deployment <nome> --type=<tipo> --port=<porta>``` : Cria um serviço
+- ```kubectl scale deployment/<nome> --replicas=<numero>``` : Escala um deployment (aumentar ou diminuir o número de pods)
+- ```kubectl get rs``` : Lista os replicasets
+- ```kubectl get services``` : Lista os serviços
+- ```kubectl describe services``` : Mostra informações sobre os serviços
+- ```kubectl set image deployment/<nome> <nome_container>=<nova_imagem>``` : Atualiza a imagem de um deployment
+- ```kubectl rollout status deployment/<nome>``` : Mostra o status de uma atualização de imagem
+- ```kubectl rollout undo deployment/<nome>``` : Desfaz uma atualização de imagem
+- ```kubectl delete service <nome>``` : Deleta um serviço
+    >> Observação: deletar um service não para o deployment
+- ```kubectl delete deployment <nome>``` : Deleta um deployment
+- ```kubectl apply -f <arquivo>``` : Cria um deployment ou service com base em um arquivo de configuração
+- ```kubectl delete -f <arquivo>``` : Deleta um deployment ou service com base em um arquivo de configuração
+
+#### Serviços
+
+As aplicações do Kubernetes não tem conexão com o mundo externo, então criamos um Service que possibilita expor os pods para o mundo externo.
+
+>> Observação, pod vs containers vs deployments:
+```
+    Um container é a unidade em que a aplicação é empacotada junto com suas dependências e bibliotecas. É dentro do container que a aplicação em si é executada.
+
+    Um pod é uma abstração de nível superior que engloba um ou mais containers relacionados que são co-localizados e compartilham o mesmo ambiente de execução. Um pod é a menor unidade que pode ser implantada, escalada, gerenciada e programada no Kubernetes. Todos os containers em um pod compartilham o mesmo endereço IP, namespace de rede e volumes de armazenamento.
+
+    Um deployment é um objeto no Kubernetes usado para gerenciar e controlar a criação e atualização de um conjunto de pods. O deployment define a especificação para os pods, como a imagem do container, a quantidade de réplicas desejadas e as estratégias de implantação. Quando você cria um deployment, o Kubernetes cria e gerencia automaticamente os pods de acordo com a especificação definida no deployment. O deployment garante que o número de réplicas definido seja mantido, e se houver falhas ou atualizações, ele cuidará do processo de criação ou substituição dos pods conforme necessário.
+```
+>> TL;DR:
+    >> - Container : É onde a aplicação roda
+    >> - Pod : É a menor unidade do Kubernetes, é onde os containers rodam
+    >> - Deployment : É um conjunto de pods
+
+#### Modo delcarativo do Kubernetes
+
+Utilizamos o modo declarativo para criar objetos no Kubernetes, ou seja, criamos um arquivo de configuração e passamos para o Kubernetes, que vai criar o objeto com base nesse arquivo.
+
+As chaves mais utilizadas no arquivo de configuração são:
+- apiVersion : Versão da API do Kubernetes
+- kind : Tipo do objeto que será criado (Deployment, Service)
+- metadata : Metadados do objeto
+- replicas : Número de réplicas do objeto (nodes, pods)
+- containers : Containers que serão criados (nome, imagem, portas, volumes)
